@@ -1,0 +1,55 @@
+﻿@{
+    @model Youtube_Downloader.Models.Youtube;
+
+    ViewData["Title"] = "Home Page";
+
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Youtube Downloader</p>
+</div>
+@if (ViewBag.DownloadSuccessfull != null)
+{<center>
+        <h3>Title: @Model.title</h3>
+        <br />
+        <h3>Duration: @Model.duration</h3>
+        <br /><h2>Downloaded</h2>
+    </center>
+        }
+        @if (ViewBag.videoFound != null)
+        {
+            <div>
+                <center>
+                    <h3>Title: @Model.title</h3>
+                    <br />
+                    <h3>Duration: @Model.duration</h3>
+                    <br />
+                    <h3>Video: @Model.videoStreams</h3>
+                    <h3>
+                        Available Streams:
+                        @for (int i = 0; i < Model.availableStreams.Streams.Count; i++)
+                        {
+                            @Model.availableStreams.Streams;
+                            <br />
+                        }
+                       @using (Html.BeginForm("DownloadVideo","Home",FormMethod.Post))
+                    {
+                           @Html.HiddenFor(y=>y.url)
+                    <br /><input type="submit" value="Download Video" name="YtSubmit" />
+                    }
+
+
+</center>
+                                </div>
+        }
+        else
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+            {
+                <h3>Enter Youtube URL</h3>
+                @Html.TextBoxFor(y => y.url, new { placeholder = "https://www.youtube.com/watch?v=1PgWqi7__Hw" })
+                <br /><input type="submit" value="Convert" name="YtSubmit" />
+            }
+
+
